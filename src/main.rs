@@ -1,10 +1,9 @@
 use std::io::Write;
+mod vec3;
 
 fn main() {
     const IMAGE_WIDTH: i32 = 255;
     const IMAGE_HEIGHT: i32 = 255;
-
-    //std::cout << "P3\n" << IMAGE_WIDTH << ' ' << IMAGE_HEIGHT << '\n255\n';
 
     println!("P3\n{IMAGE_WIDTH} {IMAGE_HEIGHT}\n255\n");
 
