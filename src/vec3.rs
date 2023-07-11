@@ -1,4 +1,5 @@
 use std::ops;
+use std::fmt;
 
 pub struct Vec3 {
     e: [f32; 3]
@@ -13,20 +14,50 @@ impl Vec3 {
     pub fn y(self) -> f32 {return self.e[1];}
     pub fn z(self) -> f32 {return self.e[2];}
 
-    pub fn length(self) -> f32 {
+    pub fn length(&self) -> f32 {
         return f32::sqrt(self.length_squared());
     }
 
-    pub fn length_squared(self) -> f32 {
-        return self.e[0] * self.e[0] + self.e[1] * self.e[1] + self.e[2] * self.e[2];
+    pub fn dot(self, rhs: Vec3) -> f32 {
+        self.e[0] * rhs.e[0] + self.e[1] * rhs.e[1] + self.e[2] * rhs.e[2]
+    }
+
+    pub fn cross(self, rhs: Vec3) -> Vec3 {
+        Self { e: [
+            self.e[1] * rhs.e[2] - self.e[2] * rhs.e[1],
+            self.e[2] * rhs.e[0] - self.e[0] * rhs.e[2],
+            self.e[0] * rhs.e[1] - self.e[1] * rhs.e[0]
+        ] }
+    }
+
+    pub fn unit_vector(&self) -> Vec3 {
+        self.clone() / self.length()
+    }
+
+    fn length_squared(&self) -> f32 {
+        self.e[0] * self.e[0] + self.e[1] * self.e[1] + self.e[2] * self.e[2]
+    }
+}
+
+impl Clone for Vec3 {
+    fn clone(&self) -> Self {
+        Self { e: [self.e[0], self.e[1], self.e[2]] }
     }
 }
 
 impl ops::Add for Vec3 {
     type Output = Vec3;
 
-    fn add(self, other: Vec3) -> Vec3 {
-        Self { e: [self.e[0] + other.e[0], self.e[1] + other.e[1], self.e[2] + other.e[2]] }
+    fn add(self, rhs: Vec3) -> Vec3 {
+        Self { e: [self.e[0] + rhs.e[0], self.e[1] + rhs.e[1], self.e[2] + rhs.e[2]] }
+    }
+}
+
+impl ops::Sub for Vec3 {
+    type Output = Vec3;
+
+    fn sub(self, rhs: Vec3) -> Vec3 {
+        Self { e: [self.e[0] - rhs.e[0], self.e[1] - rhs.e[1], self.e[2] - rhs.e[2]] }
     }
 }
 
@@ -38,19 +69,57 @@ impl ops::Neg for Vec3 {
     }
 }
 
+impl ops::Mul<Vec3> for Vec3 {
+    type Output = Vec3;
+
+    fn mul(self, rhs: Vec3) -> Vec3 {
+        Self { e: [self.e[0] * rhs.e[0], self.e[1] * rhs.e[1], self.e[2] * rhs.e[2]] }
+    }
+}
+
+impl ops::Mul<Vec3> for f32 {
+    type Output = Vec3;
+
+    fn mul(self, rhs: Vec3) -> Vec3 {
+        Vec3 { e: [rhs.e[0] * self, rhs.e[1] * self, rhs.e[2] * self] }
+    }
+}
+
 impl ops::Mul<f32> for Vec3 {
     type Output = Vec3;
 
-    fn mul(self, t: f32) -> Vec3 {
-        Self { e: [self.e[0] * t, self.e[1] * t, self.e[2] * t] }
+    fn mul(self, rhs: f32) -> Vec3 {
+        Self { e: [self.e[0] * rhs, self.e[1] * rhs, self.e[2] * rhs] }
+    }
+}
+
+impl ops::Div<Vec3> for Vec3 {
+    type Output = Vec3;
+
+    fn div(self, rhs: Vec3) -> Vec3 {
+        Self { e: [self.e[0] / rhs.e[0], self.e[1] / rhs.e[1], self.e[2] / rhs.e[2]] }
+    }
+}
+
+impl ops::Div<Vec3> for f32 {
+    type Output = Vec3;
+
+    fn div(self, rhs: Vec3) -> Vec3 {
+        Vec3 { e: [rhs.e[0] / self, rhs.e[1] / self, rhs.e[2] / self] }
     }
 }
 
 impl ops::Div<f32> for Vec3 {
     type Output = Vec3;
 
-    fn div(self, t: f32) -> Vec3 {
-        Self { e: [self.e[0] / t, self.e[1] / t, self.e[2] / t] }
+    fn div(self, rhs: f32) -> Vec3 {
+        Self { e: [self.e[0] / rhs, self.e[1] / rhs, self.e[2] / rhs] }
+    }
+}
+
+impl fmt::Display for Vec3 {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{},{},{}", self.e[0], self.e[1], self.e[2])
     }
 }
 
@@ -60,5 +129,5 @@ impl Default for Vec3 {
     }
 }
 
-type Point3 = Vec3;
-type Color = Vec3;
+pub type Point3 = Vec3;
+pub type Color = Vec3;

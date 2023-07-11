@@ -26,4 +26,9 @@ fn main() {
     }
 
     eprintln!("\nDone.\n");
+
+    let v1: vec3::Point3 = vec3::Point3::new(2.0, 2.0, 2.0);
+    let v2: vec3::Point3 = vec3::Point3::new(3.0, 3.0, 3.0);
+    let v3 = 5.0 * v1;
+    eprintln!("{}", v3);
 }
