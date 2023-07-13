@@ -1,5 +1,6 @@
 use std::io::Write;
 mod vec3;
+mod color;
 
 fn main() {
     const IMAGE_WIDTH: i32 = 255;
@@ -13,15 +14,8 @@ fn main() {
         std::io::stderr().flush().expect("Unable to flush stderr");
 
         for j in 0..IMAGE_WIDTH {
-            let r: f32 = (j as f32) / (IMAGE_WIDTH - 1) as f32;
-            let g: f32 = (i as f32) / (IMAGE_HEIGHT - 1) as f32;
-            let b: f32 = 0.25;
-
-            let ir: i32 = (255.999 * r) as i32;
-            let ig: i32 = (255.999 * g) as i32;
-            let ib: i32 = (255.999 * b) as i32;
-
-            println!("{ir} {ig} {ib}\n");
+            let pixel_color: vec3::color = vec3::color::new((j as f32) / (image_width - 1), (i as f32) / (image_height - 1), 0.25);
+            color::write_color(pixel_color);
         }
     }
 
