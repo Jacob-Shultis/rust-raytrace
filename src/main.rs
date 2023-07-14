@@ -14,7 +14,7 @@ fn main() {
         std::io::stderr().flush().expect("Unable to flush stderr");
 
         for j in 0..IMAGE_WIDTH {
-            let pixel_color: vec3::color = vec3::color::new((j as f32) / (image_width - 1), (i as f32) / (image_height - 1), 0.25);
+            let pixel_color: vec3::Color = vec3::Color::new((j as f32) / (IMAGE_WIDTH - 1) as f32, (i as f32) / (IMAGE_HEIGHT - 1) as f32, 0.25);
             color::write_color(pixel_color);
         }
     }

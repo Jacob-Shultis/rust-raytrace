@@ -1,6 +1,7 @@
 use std::ops;
 use std::fmt;
 
+#[derive(Copy, Clone)]
 pub struct Vec3 {
     e: [f32; 3]
 }
@@ -36,12 +37,6 @@ impl Vec3 {
 
     fn length_squared(&self) -> f32 {
         self.e[0] * self.e[0] + self.e[1] * self.e[1] + self.e[2] * self.e[2]
-    }
-}
-
-impl Clone for Vec3 {
-    fn clone(&self) -> Self {
-        Self { e: [self.e[0], self.e[1], self.e[2]] }
     }
 }
 
