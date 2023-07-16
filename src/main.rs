@@ -45,7 +45,6 @@ fn main() {
 
             let r: Ray = Ray::new(origin, lower_left_corner + u*horizontal + v*vertical - origin);
             let pixel_color: Color = ray_color(r);
-            //let pixel_color: Color = Color::new((j as f32) / (IMAGE_WIDTH - 1) as f32, (i as f32) / (IMAGE_HEIGHT - 1) as f32, 0.25);
             color::write_color(pixel_color);
         }
     }
