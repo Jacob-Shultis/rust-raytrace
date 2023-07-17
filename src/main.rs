@@ -9,15 +9,15 @@ mod color;
 
 fn hit_sphere(center: Point3, radius: f32, r: Ray) -> f32 {
     let oc: Vec3 = r.origin() - center;
-    let a: f32 = r.direction().dot(r.direction());
-    let b: f32 = 2.0 * oc.dot(r.direction());
-    let c: f32 = oc.dot(oc) - radius*radius;
-    let discriminant: f32 = b*b - 4.0*a*c;
+    let a: f32 = r.direction().length_squared();
+    let half_b: f32 = oc.dot(r.direction());
+    let c: f32 = oc.length_squared() - radius*radius;
+    let discriminant: f32 = half_b*half_b - a*c;
     
     if discriminant < 0.0 {
         return -1.0;
     } else {
-        return (-b - f32::sqrt(discriminant)) / 2.0*a;
+        return (-half_b - f32::sqrt(discriminant)) / a;
     }
 }
 
