@@ -37,7 +37,8 @@ impl Hittable for Sphere {
 
         rec.t = root;
         rec.p = r.at(rec.t);
-        rec.normal = (rec.p - center) / radius;
+        outword_normal: Vec3 = (rec.p - center) / radius;
+        rec.set_face_normal(r, outword_normal);
 
         return true;
     }
